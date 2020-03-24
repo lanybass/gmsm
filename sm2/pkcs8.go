@@ -213,11 +213,12 @@ func ParseSm2PrivateKey(der []byte) (*PrivateKey, error) {
 func ParsePKCS8UnecryptedPrivateKey(der []byte) (*PrivateKey, error) {
 	var privKey pkcs8
 
-	if _, err := asn1.Unmarshal(der, &privKey); err != nil {
-		return nil, err
-	}
-	if !reflect.DeepEqual(privKey.Algo.Algorithm, oidSM2) {
-		return nil, errors.New("x509: not sm2 elliptic curve")
+	if _, err := asn1.Unmarshal(der, &privKey); err == nil {
+		if !reflect.DeepEqual(privKey.Algo.Algorithm, oidSM2) {
+			return nil, errors.New("x509: not sm2 elliptic curve")
+		}
+	}else{
+		return ParseSm2PrivateKey(der)
 	}
 	return ParseSm2PrivateKey(privKey.PrivateKey)
 }

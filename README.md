@@ -1,3 +1,9 @@
+```
+2020-3-24 by forker
+add surpport to 
+PrivateKey.pem:
+-----BEGIN EC PRIVATE KEY-----
+```
 
 GM SM2/3/4 library based on Golang
 
